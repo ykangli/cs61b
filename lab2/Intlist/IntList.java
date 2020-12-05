@@ -51,8 +51,8 @@ public class IntList {
         if (L == null) {
             return null;
         }
-        IntList res = new IntList(L.first * L.first, null);
-        IntList ptr = res;
+        IntList res = new IntList(L.first * L.first, null); //res始终指向构造的新IntList，即始终指向结果IntList
+        IntList ptr = res; //目标IntList需要一个结点一个结点的构造
         L = L.rest;
         while (L != null) {
             ptr.rest = new IntList(L.first * L.first, null);
@@ -77,23 +77,63 @@ public class IntList {
 
     /**
      * Returns a list consisting of the elements of A followed by the
-     * *  elements of B.  May modify items of A. Don't use 'new'.
+     * *  elements of B.  May modify items of A. Don't use 'new'. Destructive.
      */
-
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        } else if (B == null) {
+            return A;
+        } else {
+            IntList p = A; //相当于p和A指向的IntList是相同的，对p进行操作，即在原IntList上操作。
+            while (p.rest != null) {
+                p = p.rest;
+            }
+            p.rest = B;
+            return A;
+        }
     }
 
     /**
      * Returns a list consisting of the elements of A followed by the
-     * * elements of B.  May NOT modify items of A.  Use 'new'.
+     * * elements of B.  May NOT modify items of A.  Use 'new'. Non-destructive.
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        IntList L = A;
+        IntList ptr = new IntList(L.first, null);
+        IntList res = ptr;
+        L = L.rest;
+        while (L != null) {
+            ptr = new IntList(L.first, null);
+            L = L.rest;
+            ptr = ptr.rest;
+        }
+        ptr.rest = B;
+        return res;
     }
 
+    public static void main(String[] args) {
+        IntList A = IntList.of(1, 2, 3);
+        IntList B = IntList.of(4, 5, 6);
+        IntList L = dcatenate(A, B);
+    }
+
+//    public IntList method(IntList L) {
+//        if (L == null) {
+//            return null;
+//        }
+//        IntList res = new IntList(L.first * L.first, null);
+//        IntList ptr = res;
+//        L = L.rest;
+//        while (L != null) {
+//            ptr.rest = new IntList(L.first * L.first, null);
+//            L = L.rest;
+//            ptr = ptr.rest;
+//        }
+////        return res;//
+//    }
 
 
 
