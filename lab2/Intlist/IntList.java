@@ -102,11 +102,11 @@ public class IntList {
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
         IntList L = A;
-        IntList ptr = new IntList(L.first, null);
-        IntList res = ptr;
+        IntList res = new IntList(L.first, null);
+        IntList ptr = res;
         L = L.rest;
         while (L != null) {
-            ptr = new IntList(L.first, null);
+            ptr.rest = new IntList(L.first, null);
             L = L.rest;
             ptr = ptr.rest;
         }
@@ -115,9 +115,9 @@ public class IntList {
     }
 
     public static void main(String[] args) {
-        IntList A = IntList.of(1, 2, 3);
-        IntList B = IntList.of(4, 5, 6);
-        IntList L = dcatenate(A, B);
+        IntList A = IntList.of(1, 2, 3, 4);
+        IntList B = IntList.of(5, 6, 7, 8);
+        IntList L = catenate(A, B);
     }
 
 //    public IntList method(IntList L) {
