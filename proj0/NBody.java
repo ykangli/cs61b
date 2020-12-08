@@ -48,8 +48,8 @@ public class NBody {
             double[] yForces = new double[planets.length];
 
             for (int i = 0; i < planets.length; i++) {
-                xForces[i] = planets[i].calcNetForceExertedByX(p);
-                yForces[i] = planets[i].calcNetForceExertedByY(p);
+                xForces[i] = planets[i].calcNetForceExertedByX(planets);
+                yForces[i] = planets[i].calcNetForceExertedByY(planets);
             }
 
             for (int i = 0; i < planets.length; i++) {
@@ -69,7 +69,7 @@ public class NBody {
             time += dt; 
 
             StdOut.printf("%d\n", planets.length);
-            StdOut.printf("%.2e\n", radius);
+            StdOut.printf("%.2e\n", uniradius);
             for (int i = 0; i < planets.length; i++) {
                 StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
                 planets[i].xxPos, planets[i].yyPos, planets[i].xxVel,
