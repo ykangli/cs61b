@@ -38,7 +38,7 @@ public class NBody {
 
         //Drawing All of the Planets
 		for (int i = 0; i < planets.length; i++) {
-			p[i].draw();
+			planets[i].draw();
         }
 
         StdDraw.enableDoubleBuffering();
@@ -48,12 +48,12 @@ public class NBody {
             double[] yForces = new double[planets.length];
 
             for (int i = 0; i < planets.length; i++) {
-                xForces[i] = p[i].calcNetForceExertedByX(p);
-                yForces[i] = p[i].calcNetForceExertedByY(p);
+                xForces[i] = planets[i].calcNetForceExertedByX(p);
+                yForces[i] = planets[i].calcNetForceExertedByY(p);
             }
 
             for (int i = 0; i < planets.length; i++) {
-                p[i].update(dt, xForces[i], yForces[i]);
+                planets[i].update(dt, xForces[i], yForces[i]);
             }
 
             StdDraw.setScale(-uniradius, uniradius);
@@ -61,7 +61,7 @@ public class NBody {
 		    StdDraw.picture(0, 0, "images/starfield.jpg");
             
             for (int i = 0; i < planets.length; i++) {
-                p[i].draw();
+                planets[i].draw();
             }
 
             StdDraw.show();
