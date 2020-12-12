@@ -5,17 +5,17 @@ import java.util.Formatter;
  * with a large number of additional methods.
  *
  * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
- *         [Do not modify this file.]
+ * [Do not modify this file.]
  */
 public class IntList {
     /**
      * First element of list.
      */
-    public int first;
+    private int first;
     /**
      * Remaining elements of list.
      */
-    public IntList rest;
+    private IntList rest;
 
     /**
      * A List with first FIRST0 and rest REST0.
@@ -29,7 +29,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -51,7 +51,7 @@ public class IntList {
         if (L == null) {
             return null;
         }
-        IntList res = new IntList(L.first * L.first, null); //res始终指向构造的新IntList，即始终指向结果IntList
+        IntList res = new IntList(L.first * L.first, null);
         IntList ptr = res; //目标IntList需要一个结点一个结点的构造
         L = L.rest;
         while (L != null) {
@@ -80,7 +80,6 @@ public class IntList {
      * *  elements of B.  May modify items of A. Don't use 'new'. Destructive.
      */
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
         if (A == null) {
             return B;
         } else if (B == null) {
@@ -100,7 +99,6 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'. Non-destructive.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
         if (A == null) {
             return B;
         } else if (B == null) {
@@ -124,7 +122,7 @@ public class IntList {
      * This method is destructive. If given null
      * as an input, returns null.
      */
-    public static IntList reverse(IntList A){
+    public static IntList reverse(IntList A) {
         IntList reverseList = null;
         IntList curr = A;
         while (curr != null) {
@@ -157,19 +155,6 @@ public class IntList {
 //        }
 ////        return res;//
 //    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
