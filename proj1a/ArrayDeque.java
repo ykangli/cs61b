@@ -52,7 +52,7 @@ public class ArrayDeque<T> {
     /**
      * Compute the index immediately “before” a given index.
      */
-    public int minusOne(int index) {
+    private int minusOne(int index) {
         if (index == 0) {
             return items.length - 1;
         }
@@ -62,12 +62,12 @@ public class ArrayDeque<T> {
     /**
      * Compute the index immediately “after” a given index.
      */
-    public int plusOne(int index) {
+    private int plusOne(int index) {
         return (index + 1) % items.length;
     }
 
     /**在动态调整数组过程中，将原数组复制到新数组中，原数组最后一个元素的复制位置的确定，需要利用此函数*/
-    public int plusOne(int index, int length) {
+    private int plusOne(int index, int length) {
         return (index + 1) % length;
     }
 
@@ -198,7 +198,6 @@ public class ArrayDeque<T> {
         nextFirst = currentFirst;
         size -= 1;
         ratio = (double) size / items.length;
-        System.out.println("removeFirst的位置是： " + currentFirst + "; removeFirst的元素是： " + removed);
         return removed;
     }
 
@@ -207,7 +206,6 @@ public class ArrayDeque<T> {
      */
     public T removeLast() {
         if (size == 0) {
-            System.out.println("队列为空不能进行remov操作");
             return null;
         }
         if (ratio < usageRatio && items.length >= minLength) {
@@ -219,7 +217,6 @@ public class ArrayDeque<T> {
         nextLast = currentLast;
         size -= 1;
         ratio = (double) size / items.length;
-        System.out.println("removeLast的位置是： " + currentLast + "; removeLast的元素是： " + removed);
         return removed;
     }
 
@@ -229,10 +226,9 @@ public class ArrayDeque<T> {
      */
     public T get(int index) {
         if (size == 0) {
-            System.out.println("队列为空不能进行remov操作");
             return null;
         }
-        int position = (nextFirst + 1) + index;
+        int position = plusOne(nextFirst) + index;
         return items[position];
     }
 }
