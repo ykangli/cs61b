@@ -128,16 +128,13 @@ public class LinkedListDeque<T> {
      * Same as get, but uses recursion.
      */
     public T getRecursive(int index) {
-        if (sentinel.next == sentinel) {
-            return null;
-        }
         return getRecursiveHelper(index, sentinel.next);
     }
 
     private T getRecursiveHelper(int index, TNode start) {
         if (index == 0) {
-            return sentinel.next.item;
+            return start.item;
         }
-        return  getRecursiveHelper(index - 1, sentinel.next.next);
+        return getRecursiveHelper(index - 1,start.next);
     }
 }

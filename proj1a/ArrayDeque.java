@@ -19,10 +19,12 @@ public class ArrayDeque<T> {
      * @rules： add and remove must take constant time, except during resizing operations.
      * @rules： get and size must take constant time.
      * @rules： The starting size of your array should be 8.
-     * @rules： The amount of memory that your program uses at any given time must be proportional to the number of items.
+     * @rules： The amount of memory that your program uses at any given time
+     * must be proportional to the number of items.
      * For example, if you add 10,000 items to the deque, and then remove 9,999 items,
      * you shouldn’t still be using an array of length 10,000ish.
-     * For arrays of length 16 or more, your usage factor should always be at least 25%. For smaller arrays,
+     * For arrays of length 16 or more, your usage factor should
+     * always be at least 25%. For smaller arrays,
      * your usage factor can be arbitrarily low.
      * 该规则表明，数组长度需要进行动态调整，以满足当数组长度大于16时，使用率不小于25%
      */
@@ -228,7 +230,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        int position = plusOne(nextFirst) + index;
+        int position = (plusOne(nextFirst) + index) % items.length;
         return items[position];
     }
 }
