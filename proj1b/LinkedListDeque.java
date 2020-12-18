@@ -1,5 +1,3 @@
-import org.junit.Test;
-
 public class LinkedListDeque<Item> implements Deque<Item> {
     private class TNode {
         private TNode prev;
@@ -145,6 +143,6 @@ public class LinkedListDeque<Item> implements Deque<Item> {
         if (index == 0) {
             return start.item;
         }
-        return getRecursiveHelper(index - 1,start.next);
+        return getRecursiveHelper(index - 1, start.next);
     }
 }

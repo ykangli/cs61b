@@ -1,4 +1,4 @@
-public class ArrayDeque<Item> implements Deque<Item>{
+public class ArrayDeque<Item> implements Deque<Item> {
     private Item[] items;
     private int size; // size of Arraydeque
     private int nextFirst; // position of executing addFirst
@@ -39,7 +39,9 @@ public class ArrayDeque<Item> implements Deque<Item>{
         return (index + 1) % items.length;
     }
 
-    /**在动态调整数组过程中，将原数组复制到新数组中，原数组最后一个元素的复制位置的确定，需要利用此函数*/
+    /**
+     * 在动态调整数组过程中，将原数组复制到新数组中，原数组最后一个元素的复制位置的确定，需要利用此函数
+     */
     private int plusOne(int index, int length) {
         return (index + 1) % length;
     }

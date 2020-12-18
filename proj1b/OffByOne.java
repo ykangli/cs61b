@@ -1,4 +1,4 @@
-public class OffByOne implements CharacterComparator{
+public class OffByOne implements CharacterComparator {
     @Override
     /** equalChars returns true for characters that are different by exactly one */
     public boolean equalChars(char x, char y) {
