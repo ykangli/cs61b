@@ -6,7 +6,9 @@ public class ArrayDeque<Item> implements Deque<Item> {
     private static int initLength = 8; // The starting length of array
     private static int eFactor = 2; //expand factor
     private static int cFactor = 2; //contract factor
-    private static int minLength = 16; // For arrays of length 16 or more, usage factor should  be at least 25%.
+    // For arrays of length 16 or more,
+    // usage factor should  be at least 25%.
+    private static int minLength = 16;
     private static double usageRatio = 0.25;
     private double ratio;
 
