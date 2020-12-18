@@ -28,5 +28,8 @@ public class TestOffByOne {
 
         boolean actual5 = offByOne.equalChars('B', 'b');
         assertFalse(actual5);
+
+        boolean actual6 = offByOne.equalChars('B', 'a');
+        assertFalse(actual6);
     }
 }

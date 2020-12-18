@@ -1,7 +1,5 @@
 import org.junit.Test;
 
-import java.security.PublicKey;
-
 import static org.junit.Assert.*;
 
 public class TestPalindrome {
@@ -20,7 +18,7 @@ public class TestPalindrome {
     }
 
     @Test
-    public void  testIsPalindrome() {
+    public void testIsPalindrome() {
         boolean a = palindrome.isPalindrome("abcdcba");
         assertTrue(a);
 
