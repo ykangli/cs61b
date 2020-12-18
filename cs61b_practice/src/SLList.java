@@ -66,9 +66,9 @@ public class SLList {
         IntNode reverseList = null; //reverseList指向当前要插入的节点
         IntNode curr =  first; //当前结点初始指向第一个结点
         while (curr != null) {
-            IntNode reminderOfList = curr.next; //保证不断链，能找到剩余要插入的
-            curr.next = reverseList; //插入操作
-            reverseList = curr; //插入操作
+            IntNode reminderOfList = curr.next; //保证不断链，能找到下一个要插入的结点
+            curr.next = reverseList; //头插操作
+            reverseList = curr; //头插操作
             curr = reminderOfList; //更新当前要插入的结点
         }
         first = reverseList;
