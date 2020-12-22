@@ -1,9 +1,12 @@
+package paractice;
+
 import org.junit.Assert;
 import org.junit.Test;
+import paractice.Array;
 
 public class TestArray {
     /**
-     * Test Array.isAreEqual()
+     * Test paractice.Array.isAreEqual()
      */
     @Test
     public void arrayIsAreEqual() {

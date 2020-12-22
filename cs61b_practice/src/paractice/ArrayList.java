@@ -1,3 +1,5 @@
+package paractice;
+
 public class ArrayList {
     // 创建一个新的数组，长度为：原来数组长度+1；从右到左，将每个位置后移，空出要插入的位置
     public static int[] insert(int[] arr, int item, int position) {

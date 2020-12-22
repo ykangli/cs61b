@@ -1,3 +1,5 @@
+package paractice;
+
 import org.junit.Assert;
 
 public class Array {
