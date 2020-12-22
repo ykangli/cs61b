@@ -95,7 +95,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     private class ArrayRingBufferIterator implements Iterator<T> {
         private int wizpos;
 
-        public ArrayRingBufferIterator() {
+        ArrayRingBufferIterator() {
             wizpos = first;
         }
 
