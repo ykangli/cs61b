@@ -9,13 +9,12 @@ import java.util.List;
 import java.util.Random;
 
 public class Room {
-    private static final int maxRoomWidth = 6; //Limiting size of room in order to achieve more reasonable layout
-    private static final int maxRoomHeight = 6;
     private static final int N = 800; // 不去重之前随机构造N + RANDOM.nextInt(50) 个房间
+    private static List deletedWorldList;
 
-    private Position leftBottom;
-    private int widthRoom;
-    private int heightRoom;
+    private final Position leftBottom;
+    private final int widthRoom;
+    private final int heightRoom;
 
 
     public Room(Position leftBottom, int widthRoom, int heightRoom) {
@@ -115,28 +114,28 @@ public class Room {
         Position rightTop = room.cornerPosition()[2];
         for (int x = room.leftBottom.x; x <= rightTop.x; x++) {
             for (int y = room.leftBottom.y; y <= rightTop.y; y++) {
-                // 是否是“边缘”的格子
-                if (x == room.leftBottom.x || x == rightTop.x || y == room.leftBottom.y || y == rightTop.y) {
-                    world[x][y] = Tileset.WALL;
-                } else {
-                    world[x][y] = Tileset.FLOOR;
-                }
+//                // 是否是“边缘”的格子
+//                if (x == room.leftBottom.x || x == rightTop.x || y == room.leftBottom.y || y == rightTop.y) {
+//                    world[x][y] = Tileset.WALL;
+//                } else {
+//                    world[x][y] = Tileset.FLOOR;
+//                }
+                world[x][y] = Tileset.FLOOR;
             }
         }
     }
 
     // 利用TETile engine 对List里面存储的房间的进行渲染
-    public static void printAllRooms(List<Room> rooms, TETile[][] world) {
-        for (int i = 0; i < rooms.size(); i++) {
-            printRoom(rooms.get(i), world);
+    private static void printAllRooms(List<Room> rooms, TETile[][] world) {
+        for (Room room : rooms) {
+            printRoom(room, world);
         }
     }
 
-    public static void  roomGenerator(TETile[][] world) {
-        Random RANDOM = new Random();
-        Room room = randomRoom(world);
+    public static void roomGenerator(TETile[][] world) {
         List<Room> rooms = generateRoomInfo(world);
         List<Room> deletedRooms = deletedOverlapRooms(rooms);
+        deletedWorldList = deletedRooms; //将所有的数组信息储存起来？？？？？
         printAllRooms(deletedRooms, world);
     }
 
@@ -148,16 +147,20 @@ public class Room {
         }
     }
 
-//    public static void main(String[] args) {
-//        int WIDTH = 40;
-//        int HEIGHT = 40;
-//
-//        TERenderer ter = new TERenderer();
-//        ter.initialize(WIDTH, HEIGHT);
-//        TETile[][] world = new TETile[WIDTH][HEIGHT];
-//
-//        roomInitial(world);
-//        roomGenerator(world);
-//        ter.renderFrame(world);
-//    }
+    public static void main(String[] args) {
+        int WIDTH = 40;
+        int HEIGHT = 40;
+
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+
+        roomInitial(world);
+        roomGenerator(world);
+
+        Position random = Hallway.findRandom(world);
+        Hallway.floodFill(world, random);
+
+        ter.renderFrame(world);
+    }
 }
