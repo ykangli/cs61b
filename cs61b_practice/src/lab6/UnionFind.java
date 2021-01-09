@@ -56,15 +56,19 @@ public class UnionFind {
 
     // Returns the root of the set v1 belongs to. Path-compression is employed allowing for fast search-time.
     public int find(int v1) {
-        while(parent[v1] != v1) {
-            v1 = parent[v1];
+        assert (v1 >= 0 && v1 < parent.length);
+
+        if (v1 != parent[v1]) {
+            parent[v1] = find(parent[v1]);
         }
-        return v1;
+        return parent[v1];
     }
 
     public static void main(String[] args) throws Exception {
         UnionFind a = new UnionFind(5);
         a.union(1,2);
-        System.out.println(a.connected(2,1));
+        a.find(1);
+        System.out.println(a.connected(2,3));
+        System.out.println(a.parent(1));
     }
 }
