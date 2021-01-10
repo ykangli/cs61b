@@ -1,0 +1,13 @@
+利用并查集构建一个渗漏系统：
+
+如何看两个格子是否相通：利用并查集的connected()
+
+如何看一个N*N的系统是否已经渗透percolated：设置两个virtual top site和virtual bottom site，如果这两个节点相连，
+
+那么系统就是percolated,实际就是设置两个集合，如果一个节点的rootId既在top site中又在bottom site中，那么该系统就是percolated
+
+top site和bottom site的设置：利用集合set来存储，top site存储在第一行的open节点，bottom存储在最后一行的open节点
+
+如何看一个grids是否isfull：检查是否与top site相连
+
+open()：open需要包含的操作，将该grid状态更改为open，依据周围情况更新该grid是否isfull，更新周围格子情况是否为isfull

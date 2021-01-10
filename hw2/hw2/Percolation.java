@@ -31,8 +31,8 @@ public class Percolation {
     }
 
     // write an xyTo1D(int r, int c) method, e.g. xyTo1D(2, 4) = 14, xyTo1D(3, 4) = 19
-    private int xyTo1D(int r, int c) {
-        int num = (r + 1) * (c + 1) - 1;
+    private int xyTo1D(int row, int col) {
+        int num = N * row + col;
         return num;
     }
 
@@ -46,12 +46,12 @@ public class Percolation {
     // update connection between a grid and its neighbor
     private void updateConnection(int row, int col, int neighborRow, int neighborCol) {
         int indexIn1D = xyTo1D(row, col);
-        // 当该grid是open，而且领居是open，那么需要联通该grid和其领居
+        // 当该grid是open，而且邻居是open，那么需要联通该grid和其邻居
         if (isValidIndex(neighborRow, neighborCol) && isOpen(neighborRow, neighborCol)) {
             int rootId = unionGrids.find(indexIn1D);
             int neighborIndexIn1D = xyTo1D(neighborRow, neighborCol);
             int neighborRootId = unionGrids.find(neighborIndexIn1D);
-            unionGrids.union(rootId, neighborRootId);
+            unionGrids.union(indexIn1D, neighborIndexIn1D);
             int newRootId = unionGrids.find(neighborIndexIn1D);
 
             // 更新top site中存储的rootId
@@ -93,7 +93,7 @@ public class Percolation {
         if (indexIn1D < N) {
             virtualTopSite.add(rootId);
         }
-        if (N * N - indexIn1D < N) {
+        if (N * N - indexIn1D <= N) {
             virtualBottomSite.add(rootId);
         }
         // 将该grid设置为open后，检查上下左右，看是否有grid是open，更新与邻居之间的连通性
@@ -139,5 +139,11 @@ public class Percolation {
 
     // use for unit testing (not required)
     public static void main(String[] args) {
+        // 有bug？？？？
+        Percolation system = new PercolationFactory().make(3);
+        system.open(0,0);
+        system.open(1,0);
+        system.open(2,0);
+        System.out.println(system.percolates());
     }
 }
