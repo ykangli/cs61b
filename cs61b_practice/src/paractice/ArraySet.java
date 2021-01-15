@@ -47,10 +47,12 @@ public class ArraySet<T> implements Iterable<T>{
             wizPos = 0;
         }
 
+        @Override
         public boolean hasNext() {
             return wizPos < size;
         }
 
+        @Override
         public T next() {
             T returnItem = items[wizPos];
             wizPos += 1;
@@ -59,7 +61,7 @@ public class ArraySet<T> implements Iterable<T>{
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<T> iterator() { //iterator is a method that return returns an iterator object
         return new ArraySetIterator();
     }
 }

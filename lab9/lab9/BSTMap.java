@@ -1,5 +1,7 @@
 package lab9;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -27,6 +29,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private Node root;  /* Root node of the tree. */
     private int size; /* The number of key-value pairs in the tree */
+    private Object[] keyArray;
 
     /* Creates an empty BSTMap. */
     public BSTMap() {
@@ -44,7 +47,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      *  or null if this map contains no mapping for the key.
      */
     private V getHelper(K key, Node p) {
-        throw new UnsupportedOperationException();
+        if (p == null) {
+            return null;
+        } else if (key.compareTo(p.key) == 0) {
+            return p.value;
+        } else if (key.compareTo(p.key) < 0) {
+            return getHelper(key, p.left);
+        } else {
+            return getHelper(key, p.right);
+        }
     }
 
     /** Returns the value to which the specified key is mapped, or null if this
@@ -52,14 +63,25 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        return getHelper(key, root);
     }
 
     /** Returns a BSTMap rooted in p with (KEY, VALUE) added as a key-value mapping.
       * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
-    private Node putHelper(K key, V value, Node p) {
-        throw new UnsupportedOperationException();
+    private Node putHelper(K key, V value, Node p) { //有问题？？？？
+        if (p == null) {
+            size += 1;
+            return new Node(key, value);
+        }
+        if (key.compareTo(p.key) == 0) {
+            p.value = value;
+        } else if (key.compareTo(p.key) < 0) {
+            p.left = putHelper(key, value, p.left);
+        } else {
+            p.right = putHelper(key, value, p.right);
+        }
+        return p;
     }
 
     /** Inserts the key KEY
@@ -67,21 +89,73 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        root = putHelper(key, value, root);
+        Set<K> keySet = keySet();
+        keyArray = keySet.toArray();
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
+    private void keySetHelper(Set<K> key, Node p) {
+        if (p == null) {
+            return;
+        }
+        key.add(p.key);
+        keySetHelper(key, p.left);
+        keySetHelper(key, p.right);
+    }
 
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        Set<K> keySet = new HashSet<>();
+        keySetHelper(keySet, root);
+        return keySet;
+    }
+
+    /**
+     * Returns a node with the maximum key in a subtree rooted from `node`
+     */
+    private Node maxNode(Node node) {
+        if (node.right == null) {
+            return node;
+        } else {
+            return maxNode(node.right);
+        }
+    }
+
+    /**
+     * 返回删除满足结点后的BST
+     */
+    private Node removeHelper(K key, Node node) {
+        if (key.compareTo(node.key) == 0) {
+            if (node.left == null && node.right == null) {
+                return null;
+            } else if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
+            } else { // 找出左子树中key值最大的结点，将右子树连接到该结点，就可以达到删除该结点的目的
+                Node maxNodeOnleft = maxNode(node.left);
+                K maxKeyOnleft = maxNodeOnleft.key;
+                V maxValueOnleft = maxNodeOnleft.value;
+                node.key = maxKeyOnleft;
+                node.value = maxValueOnleft;
+                node.left = removeHelper(maxKeyOnleft, node.left); // 将左子树中最大的结点删除
+                return node;
+            }
+        }
+        if (key.compareTo(node.key) < 0) {
+            node.left = removeHelper(key, node.left);
+        } else {
+            node.right = removeHelper(key, node.right);
+        }
+        return node;
     }
 
     /** Removes KEY from the tree if present
@@ -90,7 +164,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        V removed = get(key);
+        if (removed == null) {
+            return null;
+        }
+        root = removeHelper(key, root);
+        size -= 1;
+        Set<K> keySet = keySet();
+        keyArray = keySet.toArray();
+        return removed;
     }
 
     /** Removes the key-value entry for the specified key only if it is
@@ -99,11 +181,61 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      **/
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        V removed = get(key);
+        if (removed != value || removed == null) {
+            return null;
+        }
+        size -= 1;
+        root = removeHelper(key, root);
+        Set<K> keySet = keySet();
+        keyArray = keySet.toArray();
+        return removed;
+    }
+
+    private class BSTMapIterator implements Iterator<K> {
+        private int pos;
+
+        public BSTMapIterator() {
+            pos = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return pos < keyArray.length;
+        }
+
+        @Override
+        public K next() { //创建一个Arraylist，将keySet中保存的key值存储在Arraylist中，以便于根据索引迭代
+            K returnItem = (K) keyArray[pos];
+            pos += 1;
+            return returnItem;
+        }
     }
 
     @Override
+    //iterator is a method that return returns an iterator object
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return new BSTMapIterator();
+    }
+
+    public static void main(String[] args) {
+        BSTMap<String, Integer> bstmap = new BSTMap<>();
+        bstmap.put("hello", 5);
+        bstmap.put("cat", 10);
+        bstmap.put("fish", 22);
+        bstmap.put("zebra", 90);
+
+        Iterator a = bstmap.iterator();
+
+        for (String key : bstmap) {
+            System.out.println(key); // ???? BSTMap的iterator有问题
+        }
+
+        System.out.println("________");
+        System.out.println(bstmap.size);
+
+        while (a.hasNext()) {
+            System.out.println(a.next());
+        }
     }
 }

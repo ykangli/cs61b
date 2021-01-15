@@ -1,8 +1,6 @@
 package hw2;
 
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-import org.knowm.xchart.XYChart;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -141,9 +139,9 @@ public class Percolation {
     public static void main(String[] args) {
         // 有bug？？？？
         Percolation system = new PercolationFactory().make(3);
-        system.open(0,0);
-        system.open(1,0);
-        system.open(2,0);
+        system.open(0, 0);
+        system.open(1, 0);
+        system.open(2, 0);
         System.out.println(system.percolates());
     }
 }
