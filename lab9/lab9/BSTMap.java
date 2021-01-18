@@ -69,7 +69,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /** Returns a BSTMap rooted in p with (KEY, VALUE) added as a key-value mapping.
       * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
-    private Node putHelper(K key, V value, Node p) { //有问题？？？？
+    private Node putHelper(K key, V value, Node p) {
         if (p == null) {
             size += 1;
             return new Node(key, value);
@@ -228,7 +228,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         Iterator a = bstmap.iterator();
 
         for (String key : bstmap) {
-            System.out.println(key); // ???? BSTMap的iterator有问题
+            System.out.println(key);
         }
 
         System.out.println("________");
